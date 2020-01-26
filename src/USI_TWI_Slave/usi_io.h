@@ -22,6 +22,8 @@
 
 #include <avr/io.h>
 
+#define __AVR_ATtiny861__USE_ALT_PINS
+
 #if defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) \
     || defined(__AVR_ATtiny84__)
 #  define DDR_USI DDRA
@@ -71,15 +73,25 @@
 #endif
 #if defined( __AVR_ATtiny261__ ) || defined( __AVR_ATtiny461__ ) \
     || defined( __AVR_ATtiny861__ )
-#  define DDR_USI DDRB
-#  define PORT_USI PORTB
-#  define PIN_USI PINB
-#  define PORT_USI_SDA PB0
-#  define PORT_USI_SCL PB2
-#  define PIN_USI_SDA PINB0
-#  define PIN_USI_SCL PINB2
-#  define USI_START_VECTOR USI_START_vect
-#  define USI_OVERFLOW_VECTOR USI_OVF_vect
+  #if defined( __AVR_ATtiny861__USE_ALT_PINS )
+    #  define DDR_USI DDRA
+    #  define PORT_USI PORTA
+    #  define PIN_USI PINA
+    #  define PORT_USI_SDA PA0
+    #  define PORT_USI_SCL PA2
+    #  define PIN_USI_SDA PINA0
+    #  define PIN_USI_SCL PINA2  
+  #else
+    #  define DDR_USI DDRB
+    #  define PORT_USI PORTB
+    #  define PIN_USI PINB
+    #  define PORT_USI_SDA PB0
+    #  define PORT_USI_SCL PB2
+    #  define PIN_USI_SDA PINB0
+    #  define PIN_USI_SCL PINB2
+  #endif
+  #  define USI_START_VECTOR USI_START_vect
+  #  define USI_OVERFLOW_VECTOR USI_OVF_vect
 #endif
 #if defined(__AVR_ATtiny43U__)
 #  define DDR_USI DDRB

@@ -61,6 +61,10 @@ void Flush_TWI_Buffers(void)
 ----------------------------------------------------------*/
 void USI_TWI_Slave_Initialise(unsigned char TWI_ownAddress)
 {
+	#if defined(__AVR_ATtiny861__USE_ALT_PINS)
+		// Use alternate pins for TWI
+		USIPP = 1 << USIPOS;
+	#endif
 	Flush_TWI_Buffers();
 
 	TWI_slaveAddress = TWI_ownAddress;
